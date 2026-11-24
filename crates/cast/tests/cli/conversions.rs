@@ -319,10 +319,12 @@ fn from_wei_negative_zero(cmd: _) {
 
 "#]]);
 
-    cmd.cast_fuse().args(["format-units", "--", "-0", "18"]).assert_success().stdout_eq(str![[r#"
+    cmd.cast_fuse().args(["format-units", "--", "-0", "18"]).assert_success().stdout_eq(str![[
+        r#"
 0
 
-"#]]);
+"#
+    ]]);
 }
 
 #[casttest]
