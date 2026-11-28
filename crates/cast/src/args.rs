@@ -172,7 +172,8 @@ pub async fn run_command(args: CastArgs) -> Result<()> {
             let (value, decimals) = stdin::unwrap2(value, decimals)?;
 
             let number = NumberWithBase::parse_int(&value, None)?;
-            let sign = if number.is_nonnegative() { "" } else { "-" };
+            // Zero has no sign, so "-0" prints like "0".
+            let sign = if number.is_nonnegative() || number.number().is_zero() { "" } else { "-" };
             let mut value = number.to_string().trim_start_matches('-').to_string();
             let value_len = value.len();
             let decimals_num = NumberWithBase::parse_uint(&decimals, None)?.number();
