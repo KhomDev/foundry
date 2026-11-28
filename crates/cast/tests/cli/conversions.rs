@@ -510,6 +510,13 @@ fn to_fixed_point(cmd: _) {
     cmd.cast_fuse().args(["to-fixed-point", "2", "-10"]).assert_success().stdout_eq("-0.10\n");
 }
 
+// Zero has no sign, so "-0" must print the same as "0" instead of a leading minus.
+#[casttest]
+fn to_fixed_point_negative_zero(cmd: _) {
+    cmd.cast_fuse().args(["to-fixed-point", "3", "-0"]).assert_success().stdout_eq("0.000\n");
+    cmd.cast_fuse().args(["to-fixed-point", "0", "-0"]).assert_success().stdout_eq("0.\n");
+}
+
 #[casttest]
 fn to_fixed_point_overflow_18446744073709551616(cmd: _) {
     cmd.args(["to-fixed-point", "18446744073709551616", "10"])
